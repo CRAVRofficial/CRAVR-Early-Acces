@@ -3,43 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CRAVR kommt. – Warteliste</title>
-<meta name="description" content="CRAVR – ein Premium-Journal für Disziplin. Trag dich in die Warteliste ein und sei zuerst dabei, wenn CRAVR startet.">
+<title>CRAVR kommt. – Early Access</title>
+<meta name="description" content="CRAVR – ein Premium-Journal für Disziplin. Trag dich ein und sei zuerst dabei, wenn CRAVR startet.">
 <meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="CRAVR kommt.">
+<meta property="og:description" content="Ein Premium-Journal für Disziplin. Trag dich ein und sei zuerst dabei.">
+<meta property="og:image" content="assets/background-original.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <div class="page">
-    <div class="card">
+  <div class="noise" aria-hidden="true"></div>
 
-      <img class="logo" src="assets/logo.svg" alt="CRAVR" width="88" height="88">
+  <main class="page">
+    <div class="panel">
 
-      <h1 class="headline">CRAVR kommt.</h1>
+      <section class="brand-col">
+        <img class="logo" src="assets/logo.svg" alt="CRAVR" width="72" height="72">
 
-      <p class="subline">Ein Premium-Journal für Disziplin. Kein Motivationsbuch. Kein Wundermittel. Dein Ritual, in dem Disziplin entsteht &ndash; Tag für Tag.</p>
+        <h1 class="headline">CRAVR kommt.</h1>
 
-      <p class="body-text">CRAVR verkauft keine Motivation. CRAVR verkauft keine Manifestation. CRAVR verkauft einen Rahmen, in dem Disziplin wachsen kann. Start: Neujahr.</p>
+        <p class="subline">Ein Premium-Journal für Disziplin. Kein Motivationsbuch. Kein Wundermittel. Dein Ritual, in dem Disziplin entsteht &ndash; Tag für Tag.</p>
 
-      <div class="divider" aria-hidden="true"></div>
+        <p class="body-text">CRAVR verkauft keine Motivation. CRAVR verkauft keine Manifestation. CRAVR verkauft einen Rahmen, in dem Disziplin wachsen kann. Start: Neujahr.</p>
 
-      <p class="teaser">Eine limitierte Founder&rsquo;s Edition ist geplant. Nicht für jeden. Nicht dauerhaft verfügbar. Wer sich jetzt einträgt, erfährt als Erstes, wenn es so weit ist.</p>
+        <div class="divider" aria-hidden="true">
+          <svg width="64" height="22" viewBox="0 0 64 22" fill="none">
+            <path d="M2 11C10 2 16 2 20 11C24 20 30 20 32 11" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+            <path d="M62 11C54 2 48 2 44 11C40 20 34 20 32 11" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+          </svg>
+        </div>
 
-      <div class="waitlist-cta">
+        <p class="teaser">Eine limitierte Founder&rsquo;s Edition ist geplant. Nicht für jeden. Nicht dauerhaft verfügbar. Wer sich jetzt einträgt, erfährt als Erstes, wenn es so weit ist.</p>
+      </section>
 
-        <h2 class="form-headline">Trag dich ein. Sei zuerst dabei.</h2>
+      <section class="form-col">
+        <div class="form-inner">
+          <h2 class="form-headline">Trag dich ein.<br>Sei zuerst dabei.</h2>
 
-        <a
-          class="submit-button"
-          href="https://a8b7668e.sibforms.com/serve/MUIFAAaZzahP-qMiyU0hkr3Yh77um_ORvUrVJ1ZaP4tePx3HKUefNO85yK0O0Wss8_Z__ifdEyQhV485bhDEKqYRKIXtEXNQ_g2X09uD9mp4218ZEtET1luWzB0kt-xJuqtSk_guafw4WrNszF1EhV5J2KAk3vlK_s5fpGRnKmV6d48kaZ5G4xTTgErlh8ppH8k7ndIJ_2CqInFjkA=="
-        >Platz sichern</a>
+          <form id="waitlist-form" class="waitlist-form" data-endpoint="PLACEHOLDER_BRIDGE_ENDPOINT" novalidate>
 
-      </div>
+            <label class="visually-hidden" for="email">Deine E-Mail-Adresse</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="email-input"
+              placeholder="Deine E-Mail-Adresse"
+              autocomplete="email"
+              required
+            >
 
-      <p class="fine-print">Kein Spam. Kein Verkauf deiner Daten. Du erfährst nur, wenn CRAVR startet. Mehr dazu in der <a href="PLACEHOLDER_DATENSCHUTZ_URL">Datenschutzerklärung</a>.</p>
+            <fieldset class="price-signal">
+              <legend>Was wäre dir ein Journal wie dieses wert? <span class="optional">(optional)</span></legend>
+              <div class="price-options">
+                <label class="price-option">
+                  <input type="radio" name="PRICE_SIGNAL" value="unter_30">
+                  <span>unter 30&nbsp;&euro;</span>
+                </label>
+                <label class="price-option">
+                  <input type="radio" name="PRICE_SIGNAL" value="30_50">
+                  <span>30&ndash;50&nbsp;&euro;</span>
+                </label>
+                <label class="price-option">
+                  <input type="radio" name="PRICE_SIGNAL" value="50_70">
+                  <span>50&ndash;70&nbsp;&euro;</span>
+                </label>
+                <label class="price-option">
+                  <input type="radio" name="PRICE_SIGNAL" value="ueber_70">
+                  <span>über 70&nbsp;&euro;</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <button type="submit" class="submit-button">Platz sichern</button>
+
+            <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+          </form>
+
+          <p class="fine-print">Kein Spam. Kein Verkauf deiner Daten. Du erfährst nur, wenn CRAVR startet. Mehr dazu in der <a href="PLACEHOLDER_DATENSCHUTZ_URL">Datenschutzerklärung</a>.</p>
+        </div>
+      </section>
 
     </div>
-  </div>
+  </main>
 
+  <script src="script.js"></script>
 </body>
 </html>
