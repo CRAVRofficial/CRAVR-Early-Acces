@@ -24,10 +24,16 @@ function isValidEmail(email) {
   return typeof email === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+const WORKER_VERSION = "2026-07-27-diag2";
+
 export default {
   async fetch(request, env) {
     if (request.method === "OPTIONS") {
       return new Response(null, { headers: corsHeaders() });
+    }
+
+    if (request.method === "GET") {
+      return json(200, { version: WORKER_VERSION, has_brevo_key: Boolean(env.BREVO_API_KEY) });
     }
 
     if (request.method !== "POST") {
