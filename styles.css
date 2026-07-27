@@ -104,6 +104,12 @@ body {
   width: 56px;
   height: 56px;
   margin-bottom: 26px;
+  border-radius: 6px;
+  box-shadow: 0 12px 28px -10px rgba(184, 154, 90, 0.45);
+}
+
+.brand-col {
+  position: relative;
 }
 
 .headline {
@@ -337,7 +343,32 @@ body {
   .brand-col {
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
+    text-align: center;
+    padding: 12px 8px;
+  }
+
+  .brand-col::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 260px;
+    height: 260px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(184, 154, 90, 0.14) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .brand-col .logo {
+    width: 108px;
+    height: 108px;
+    margin-bottom: 32px;
+  }
+
+  .brand-col .subline {
+    max-width: 34ch;
   }
 
   .col-divider {
