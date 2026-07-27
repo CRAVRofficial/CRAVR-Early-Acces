@@ -75,8 +75,10 @@ export default {
       if (brevoResponse.ok || body?.code === "duplicate_parameter") {
         return json(200, { ok: true });
       }
+      return json(502, { error: "brevo_request_failed", brevo_status: brevoResponse.status, brevo_body: body });
     }
 
-    return json(502, { error: "brevo_request_failed" });
+    const errorText = await brevoResponse.text().catch(() => "");
+    return json(502, { error: "brevo_request_failed", brevo_status: brevoResponse.status, brevo_body: errorText });
   },
 };
