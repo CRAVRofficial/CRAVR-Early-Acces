@@ -14,7 +14,6 @@
 
 :root {
   --deep-green: #0D1F17;
-  --deep-green-light: #142a1f;
   --rich-black: #0A0A0A;
   --dark-gold: #B89A5A;
   --dark-gold-hover: #cbb078;
@@ -54,79 +53,86 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(16px, 5vw, 56px);
+  padding: clamp(16px, 5vw, 64px);
+  overflow: hidden;
+}
+
+.page::before {
+  content: "";
+  position: absolute;
+  inset: -5%;
+  z-index: 0;
   background-image:
     radial-gradient(ellipse at 30% 20%, rgba(184, 154, 90, 0.08) 0%, transparent 55%),
     linear-gradient(165deg, rgba(10, 10, 10, 0.86) 0%, rgba(13, 31, 23, 0.93) 100%),
     url("assets/background-original.jpg");
   background-size: cover;
   background-position: center;
+  animation: slow-pan 40s ease-in-out infinite alternate;
+}
+
+@keyframes slow-pan {
+  from { transform: scale(1.06) translate(0, 0); }
+  to   { transform: scale(1.12) translate(-1%, -1%); }
 }
 
 .panel {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 460px;
+  max-width: 480px;
   background-color: var(--deep-green);
   border: 1px solid rgba(184, 154, 90, 0.22);
   border-radius: 10px;
   box-shadow: 0 30px 60px -20px rgba(5, 15, 10, 0.65), 0 4px 18px rgba(184, 154, 90, 0.06);
-  padding: clamp(30px, 6vw, 48px) clamp(22px, 5vw, 40px);
+  padding: clamp(36px, 8vw, 56px) clamp(26px, 6vw, 48px);
   text-align: center;
+  animation: rise-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page::before { animation: none; }
+  .panel { animation: none; }
 }
 
 .logo {
-  width: 60px;
-  height: 60px;
-  margin-bottom: 22px;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 26px;
 }
 
 .headline {
   font-family: "Cinzel", Georgia, serif;
   font-weight: 600;
-  font-size: clamp(30px, 6vw, 40px);
-  letter-spacing: 0.5px;
-  line-height: 1.1;
-  margin: 0 0 16px 0;
+  font-size: clamp(28px, 5.5vw, 38px);
+  letter-spacing: 1.5px;
+  line-height: 1.15;
+  margin: 0 0 20px 0;
   color: var(--text-light);
+  text-transform: uppercase;
   text-wrap: balance;
 }
 
 .subline {
   font-size: 15px;
-  line-height: 1.65;
-  color: var(--text-muted);
-  margin: 0 0 22px 0;
-  text-wrap: pretty;
-}
-
-.body-text {
-  font-size: 15px;
-  line-height: 1.65;
-  margin: 0 0 26px 0;
-  text-wrap: pretty;
-}
-
-.divider {
-  color: var(--dark-gold);
-  display: flex;
-  justify-content: center;
-  margin: 0 0 26px 0;
-  opacity: 0.85;
-}
-
-.teaser {
-  font-size: 14px;
-  line-height: 1.65;
+  line-height: 1.7;
   color: var(--text-muted);
   margin: 0;
   text-wrap: pretty;
 }
 
+.col-divider {
+  display: none;
+}
+
 .form-col {
-  margin-top: 34px;
-  padding-top: 30px;
+  margin-top: 40px;
+  padding-top: 34px;
   border-top: 1px solid rgba(184, 154, 90, 0.18);
 }
 
@@ -134,11 +140,12 @@ body {
   font-family: "Cinzel", Georgia, serif;
   font-weight: 500;
   font-size: 17px;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.6px;
   line-height: 1.35;
   text-align: center;
-  margin: 0 0 20px 0;
+  margin: 0 0 22px 0;
   color: var(--dark-gold);
+  text-transform: uppercase;
 }
 
 .visually-hidden {
@@ -183,7 +190,7 @@ body {
 .price-signal {
   border: none;
   padding: 0;
-  margin: 0 0 22px 0;
+  margin: 0 0 24px 0;
 }
 
 .price-signal legend {
@@ -308,7 +315,7 @@ body {
   font-size: 12px;
   line-height: 1.65;
   color: var(--text-muted);
-  margin: 24px 0 0 0;
+  margin: 26px 0 0 0;
 }
 
 .fine-print a {
@@ -318,13 +325,13 @@ body {
 /* --- Desktop: aus der einen Mobil-Karte wird ein echtes Zwei-Spalten-Layout --- */
 @media (min-width: 880px) {
   .panel {
-    max-width: 920px;
+    max-width: 900px;
     display: grid;
-    grid-template-columns: 1.1fr 1px 0.9fr;
+    grid-template-columns: 1.1fr auto 0.9fr;
     align-items: stretch;
     text-align: left;
-    padding: clamp(44px, 5vw, 64px);
-    gap: clamp(32px, 4vw, 56px);
+    padding: clamp(48px, 5vw, 72px);
+    gap: clamp(36px, 4vw, 60px);
   }
 
   .brand-col {
@@ -333,19 +340,14 @@ body {
     justify-content: center;
   }
 
-  .divider {
-    justify-content: flex-start;
-  }
-
-  .panel::before {
-    content: "";
-    grid-column: 2;
-    grid-row: 1;
-    background: linear-gradient(180deg, transparent, rgba(184, 154, 90, 0.28), transparent);
+  .col-divider {
+    display: block;
+    width: 1px;
+    align-self: stretch;
+    background: linear-gradient(180deg, transparent, rgba(184, 154, 90, 0.3), transparent);
   }
 
   .form-col {
-    grid-column: 3;
     margin-top: 0;
     padding-top: 0;
     border-top: none;
