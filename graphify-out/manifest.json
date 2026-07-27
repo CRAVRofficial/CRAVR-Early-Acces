@@ -1,0 +1,42 @@
+{
+  "bridge/worker.js": {
+    "mtime": 1785177968.2538028,
+    "ast_hash": "8213746e17b710b3d5efab6d942d79d6",
+    "semantic_hash": "8213746e17b710b3d5efab6d942d79d6"
+  },
+  "script.js": {
+    "mtime": 1785177945.2887857,
+    "ast_hash": "1255c1989cba4970d27824c80bc33d5d",
+    "semantic_hash": "1255c1989cba4970d27824c80bc33d5d"
+  },
+  "bridge/README.md": {
+    "mtime": 1785177985.6092546,
+    "ast_hash": "2a71e04d0826b43056c1f9ca0da0a23a",
+    "semantic_hash": "2a71e04d0826b43056c1f9ca0da0a23a"
+  },
+  "fonts/Cinzel/OFL.txt": {
+    "mtime": 1785161690.2151082,
+    "ast_hash": "259a8a47592497f6646cc78e447bb69f",
+    "semantic_hash": "259a8a47592497f6646cc78e447bb69f"
+  },
+  "fonts/Montserrat/OFL.txt": {
+    "mtime": 1785161690.2911105,
+    "ast_hash": "edcb7f99b7cfc36c22a21b28d7cbf3bb",
+    "semantic_hash": "edcb7f99b7cfc36c22a21b28d7cbf3bb"
+  },
+  "index.html": {
+    "mtime": 1785179246.0176249,
+    "ast_hash": "b37b51485ff56d7685aa5256a00ce735",
+    "semantic_hash": "b37b51485ff56d7685aa5256a00ce735"
+  },
+  "assets/background-original.jpg": {
+    "mtime": 1785161690.3551083,
+    "ast_hash": "c583590b44b399322fc7b69e054b841d",
+    "semantic_hash": "c583590b44b399322fc7b69e054b841d"
+  },
+  "assets/logo.svg": {
+    "mtime": 1785161690.3211074,
+    "ast_hash": "6b207255ebc022cbb480ddf96c8788a2",
+    "semantic_hash": "6b207255ebc022cbb480ddf96c8788a2"
+  }
+}

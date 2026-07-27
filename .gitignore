@@ -1,0 +1,3 @@
+# Lokale, maschinenspezifische graphify-Hilfsdateien (enthalten absolute Pfade)
+graphify-out/.graphify_python
+graphify-out/.graphify_root
