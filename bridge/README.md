@@ -2,11 +2,28 @@
 
 Kleine Cloudflare-Worker-Funktion, die die Warteliste-Anmeldung (E-Mail plus optionale Preis-Angabe) von `index.html` entgegennimmt und sicher in Brevo einträgt (Liste "CRAVR Early Access", ID 5). Der Brevo-API-Schlüssel steht dabei nie im Website-Code, sondern nur in dieser Funktion, als geschütztes "Secret".
 
-## Stand
+## Stand: vollständig eingerichtet (2026-08-26)
 
-Grundeinrichtung ist erledigt und am 2026-08-26 geprüft: Der Worker läuft unter `https://cravr-warteliste.cravr-official.workers.dev`, der Brevo-Schlüssel ist hinterlegt, Liste 5 und das Attribut `PRICE_SIGNAL` existieren.
+Alles läuft, per Selbsttest bestätigt. Der Worker antwortet unter `https://cravr-warteliste.cravr-official.workers.dev` mit:
 
-Offen sind die beiden Punkte unter "Noch einzurichten".
+```json
+{"version":"2026-08-26-secure2","has_brevo_key":true,"doi_template":"6","has_rate_limit":true}
+```
+
+Erledigt:
+
+- Brevo-Schlüssel als Secret hinterlegt, Liste 5 und Attribut `PRICE_SIGNAL` vorhanden
+- KV-Speicher `cravr-rate-limit` angelegt und als `RATE_LIMIT` verknüpft
+- `BREVO_DOI_TEMPLATE_ID` = 6 (CRAVR-Design), `BREVO_DOI_REDIRECT_URL` auf die Dankeseite
+- Domain `cravr.de` ist bei Brevo vollständig beglaubigt (DKIM 1 und 2, DMARC, Marken-Eintrag), im DNS geprüft
+- End-to-End getestet: Anmeldung ausgelöst, Bestätigungsmail kam an, fremde Herkunft wird mit 403 abgewiesen, Honeypot verwirft Bot-Versuche still
+
+**Zwei Stolpersteine, die beim Testen Zeit gekostet haben und hier festgehalten sind:**
+
+1. **Der Mailversand kann mehrere Minuten dauern.** Ein Test gilt nicht als gescheitert, nur weil nach zwei Minuten nichts da ist.
+2. **Gmails Suche `newer_than:1d` rundet auf Kalendertage** und übersieht dabei frische Mails. Beim Nachprüfen besser `newer_than:3d` verwenden oder direkt im Postfach schauen.
+
+Eine dritte Fehlspur war die Annahme, die Domain sei nicht beglaubigt. Ursache war eine Abfrage der falschen Eintragsnamen: Brevo nutzt `brevo1._domainkey` und `brevo2._domainkey`, nicht das übliche `mail._domainkey`.
 
 ## Was der Worker prüft, bevor er etwas einträgt
 
@@ -17,30 +34,18 @@ Vier Stufen, absichtlich hintereinander:
 3. **Begrenzung pro Absender.** Höchstens 5 Versuche je IP-Adresse in 5 Minuten. Verhindert, dass jemand die Liste per Skript mit tausenden Adressen flutet.
 4. **Doppelte Bestätigung (Double Opt-in).** Der Kontakt landet erst nach einem Klick in der Bestätigungsmail auf der Liste. Das verhindert, dass jemand fremde Adressen einträgt, und ist gleichzeitig der Einwilligungsnachweis nach Art. 7 DSGVO.
 
-## Noch einzurichten (Bennett, ca. 10 Minuten)
+## Wie es eingerichtet wurde (zum Nachvollziehen)
 
-### 1. Speicher für die Anfragebegrenzung (KV)
+Diese Schritte sind bereits erledigt, hier nur dokumentiert, falls etwas neu aufgesetzt werden muss.
 
-KV ist ein einfacher Speicher bei Cloudflare, in dem sich der Worker merkt, wie oft eine IP-Adresse es schon versucht hat. Wie ein Strichlisten-Zettel neben der Tür.
+**KV-Speicher fuer die Anfragebegrenzung.** KV ist ein einfacher Speicher bei Cloudflare, in dem sich der Worker merkt, wie oft eine IP-Adresse es schon versucht hat, wie ein Strichlisten-Zettel neben der Tuer. Angelegt als `cravr-rate-limit`, im Worker unter Settings, Bindings als KV Namespace mit dem Variablennamen `RATE_LIMIT` verknuepft.
 
-1. Auf [dash.cloudflare.com](https://dash.cloudflare.com) einloggen.
-2. Links im Menü **Storage & Databases** öffnen, dort **KV** wählen.
-3. Auf **Create Instance** klicken, als Namen `cravr-rate-limit` eintragen, bestätigen.
-4. Zurück zum Worker `cravr-warteliste`, dort **Settings** öffnen, Abschnitt **Bindings**.
-5. **Add binding** wählen, Typ **KV Namespace**. Bei "Variable name" exakt `RATE_LIMIT` eintragen (Großbuchstaben, mit Unterstrich), bei "KV namespace" den eben erstellten `cravr-rate-limit` auswählen. Speichern.
+**Bestaetigungsmail.** Vorlage "CRAVR Early Access - Anmeldung bestaetigen (DOI)", Nummer 6, im CRAVR-Design statt im blauen Brevo-Standard, Absender `info@cravr.de`. Im Worker als zwei normale Variablen hinterlegt (keine Secrets noetig, das sind keine Geheimnisse):
 
-Ohne diesen Schritt funktioniert die Anmeldung weiterhin, nur die Begrenzung greift nicht.
+- `BREVO_DOI_TEMPLATE_ID`, Wert `6`
+- `BREVO_DOI_REDIRECT_URL`, Wert `https://cravrofficial.github.io/CRAVR-Early-Acces/danke.html`, nach dem Domain-Umzug `https://early.cravr.de/danke.html`
 
-### 2. Bestätigungsmail (Double Opt-in)
-
-Die Vorlage ist bereits angelegt: "CRAVR Early Access - Anmeldung bestaetigen (DOI)", **Vorlagen-Nummer 6**, im CRAVR-Design statt im blauen Brevo-Standard. Absender ist `info@cravr.de`. Es fehlt nur noch, sie dem Worker bekannt zu machen:
-
-1. Im Worker unter **Settings → Variables and Secrets** zwei normale Variablen anlegen (keine Secrets nötig, das sind keine Geheimnisse):
-   - `BREVO_DOI_TEMPLATE_ID`, Wert: `6`
-   - `BREVO_DOI_REDIRECT_URL`, Wert: die Adresse der Dankeseite, also `https://cravrofficial.github.io/CRAVR-Early-Acces/danke.html` beziehungsweise nach dem Domain-Umzug `https://early.cravr.de/danke.html`
-2. Speichern und den Worker erneut deployen.
-
-Solange diese beiden Werte fehlen, trägt der Worker Kontakte direkt ein, ohne Bestätigungsschritt. Das ist der Rückfallweg und für den Livegang nicht ausreichend.
+Fehlen diese beiden Werte, traegt der Worker Kontakte direkt ein, ohne Bestaetigungsschritt. Das ist der Rueckfallweg und fuer den Livegang nicht ausreichend.
 
 ## Selbsttest
 
@@ -54,14 +59,14 @@ Antwort bei vollständiger Einrichtung:
 
 ```json
 {
-  "version": "2026-08-26-secure1",
+  "version": "2026-08-26-secure2",
   "has_brevo_key": true,
-  "has_doi_template": true,
+  "doi_template": "6",
   "has_rate_limit": true
 }
 ```
 
-Steht bei einem der drei Werte `false`, fehlt der zugehörige Schritt oben.
+Steht `has_brevo_key` oder `has_rate_limit` auf `false`, oder ist `doi_template` leer, fehlt der zugehörige Schritt oben.
 
 ## Bei Umzug auf die eigene Domain
 
