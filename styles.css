@@ -30,6 +30,12 @@ html, body {
   padding: 0;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   font-family: "Montserrat", Georgia, serif;
   color: var(--text-light);
@@ -237,7 +243,7 @@ body {
   padding: 9px 10px;
   font-size: 13px;
   border: 1px solid rgba(184, 154, 90, 0.3);
-  border-radius: 3px;
+  border-radius: 4px;
   color: var(--text-muted);
   white-space: nowrap;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
@@ -394,4 +400,349 @@ body {
   .price-signal legend {
     text-align: left;
   }
+}
+
+/* ============================================================
+   Abschnitte unterhalb des Hero
+   Zweck: Kaltbesuchern von Social Media erklaeren, worum es geht,
+   ohne die Struktur des Journals preiszugeben.
+   ============================================================ */
+
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.section {
+  position: relative;
+  padding: clamp(72px, 13vw, 150px) clamp(20px, 5vw, 64px);
+  border-top: 1px solid rgba(184, 154, 90, 0.12);
+  overflow: hidden;
+}
+
+.section-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 940px;
+  margin: 0 auto;
+}
+
+.section-headline {
+  font-family: "Cinzel", Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(24px, 4.2vw, 34px);
+  letter-spacing: 1.2px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin: 0 0 22px 0;
+  text-wrap: balance;
+}
+
+.section-body {
+  font-size: clamp(15px, 1.7vw, 17px);
+  line-height: 1.8;
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 58ch;
+  text-wrap: pretty;
+}
+
+/* --- Das Prinzip --- */
+
+.section-principle {
+  background-color: var(--rich-black);
+}
+
+.section-accent {
+  font-family: "Cinzel", Georgia, serif;
+  font-size: clamp(17px, 2.4vw, 22px);
+  letter-spacing: 1px;
+  color: var(--dark-gold);
+  margin: 34px 0 0 0;
+}
+
+/* --- Markenkern --- */
+
+.section-creed {
+  background-color: var(--deep-green);
+  text-align: center;
+}
+
+.creed {
+  margin: 0;
+  font-family: "Cinzel", Georgia, serif;
+  font-size: clamp(19px, 3.2vw, 29px);
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+}
+
+.creed-line {
+  display: block;
+}
+
+.creed-negative {
+  color: var(--text-muted);
+}
+
+.creed-positive {
+  color: var(--text-light);
+  margin-top: 20px;
+}
+
+/* --- Ausblick mit Schattenwurf --- */
+
+.section-more {
+  background-color: var(--rich-black);
+}
+
+.section-more-grid {
+  display: grid;
+  gap: clamp(44px, 7vw, 76px);
+  align-items: center;
+}
+
+.more-shadows {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(38px, 7vw, 68px);
+  min-height: 230px;
+  pointer-events: none;
+}
+
+/* Schattenwurf statt Produktbild: weich, schraeg, sehr zurueckhaltend.
+   Deutet an, dass zum Ritual mehr gehoert, ohne ein Produkt zu behaupten. */
+.shadow-shape {
+  fill: #000;
+  opacity: 0.5;
+  filter: blur(3px);
+  transform-origin: bottom center;
+}
+
+/* Beide Schatten teilen denselben Neigungswinkel, sonst wirkt es wie zwei
+   Lichtquellen und der Effekt fliegt sofort auf. */
+.shadow-hourglass {
+  width: clamp(74px, 13vw, 104px);
+  transform: skewX(-16deg) scaleY(1.06);
+}
+
+.shadow-pen {
+  width: clamp(17px, 3vw, 24px);
+  transform: skewX(-16deg);
+  opacity: 0.42;
+}
+
+/* Warmer Lichtschein, der den Schattenwurf plausibel macht */
+.more-shadows::before {
+  content: "";
+  position: absolute;
+  inset: -12% -6% -18% -6%;
+  background: radial-gradient(ellipse at 62% 8%, rgba(184, 154, 90, 0.15) 0%, transparent 62%);
+  z-index: -1;
+}
+
+/* --- Abschluss --- */
+
+.section-close {
+  background-color: var(--deep-green);
+  text-align: center;
+}
+
+.section-close .section-body {
+  margin: 0 auto;
+}
+
+.close-headline {
+  color: var(--dark-gold);
+}
+
+.close-button {
+  width: auto;
+  min-width: 220px;
+  margin: 36px auto 0 auto;
+  padding: 15px 34px;
+}
+
+/* --- Fusszeile --- */
+
+.site-footer {
+  background-color: var(--rich-black);
+  border-top: 1px solid rgba(184, 154, 90, 0.12);
+  padding: 30px clamp(20px, 5vw, 64px);
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.footer-brand {
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 14px;
+  letter-spacing: 2.5px;
+  color: var(--dark-gold);
+}
+
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+}
+
+.footer-nav a,
+.site-footer a {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-nav a:hover,
+.site-footer a:hover {
+  color: var(--dark-gold);
+}
+
+.footer-nav a:focus-visible,
+.site-footer a:focus-visible {
+  outline: 2px solid var(--dark-gold);
+  outline-offset: 3px;
+}
+
+/* --- Desktop-Aufteilung des Ausblick-Abschnitts --- */
+
+@media (min-width: 880px) {
+  .section-more-grid {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+
+  .more-shadows {
+    min-height: 290px;
+  }
+}
+
+/* --- Einblenden beim Scrollen ---
+   Nutzt scroll-driven animations. Bewusst hinter @supports, damit ohne
+   Browser-Unterstuetzung nichts unsichtbar bleibt. */
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal > .section-inner {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 26%;
+    }
+  }
+}
+
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Bestaetigungsseite nach dem Double-Opt-in-Klick --- */
+
+.panel-single {
+  max-width: 520px;
+  display: block;
+  text-align: center;
+}
+
+.panel-single .logo {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.panel-single .subline {
+  max-width: 42ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.thanks-accent {
+  margin-top: 30px;
+}
+
+@media (min-width: 880px) {
+  .panel-single {
+    grid-template-columns: none;
+    padding: clamp(48px, 5vw, 72px);
+    text-align: center;
+  }
+}
+
+/* --- Rechtsseiten (Impressum, Datenschutz) --- */
+
+.legal-page {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: clamp(48px, 9vw, 96px) clamp(20px, 5vw, 40px);
+}
+
+.legal-page h1 {
+  font-family: "Cinzel", Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(24px, 4.2vw, 32px);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin: 0 0 34px 0;
+}
+
+.legal-page h2 {
+  font-family: "Cinzel", Georgia, serif;
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--dark-gold);
+  margin: 42px 0 14px 0;
+}
+
+.legal-page p,
+.legal-page li {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-muted);
+}
+
+.legal-page ul {
+  padding-left: 20px;
+  margin: 0 0 16px 0;
+}
+
+.legal-page a {
+  color: var(--dark-gold);
+}
+
+.legal-back {
+  display: inline-block;
+  margin-bottom: 34px;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.legal-back:hover {
+  color: var(--dark-gold);
+}
+
+/* Platzhalter, die vor dem Livegang ersetzt werden muessen.
+   Bewusst auffaellig, damit sie nicht versehentlich online bleiben. */
+.legal-todo {
+  display: block;
+  padding: 14px 16px;
+  margin: 0 0 20px 0;
+  border: 1px dashed #e07a5f;
+  border-radius: 4px;
+  color: #e07a5f;
+  font-size: 14px;
+  line-height: 1.6;
 }

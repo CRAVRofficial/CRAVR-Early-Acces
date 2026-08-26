@@ -17,69 +17,149 @@
 
   <div class="noise" aria-hidden="true"></div>
 
-  <main class="page">
-    <div class="panel">
+  <main>
 
-      <section class="brand-col">
-        <img class="logo" src="assets/logo.svg" alt="CRAVR" width="72" height="72">
+    <!-- Hero: bleibt der erste Viewport, Formular direkt sichtbar -->
+    <section class="page" id="anmeldung">
+      <div class="panel">
 
-        <h1 class="headline">CRAVR kommt.</h1>
+        <div class="brand-col">
+          <img class="logo" src="assets/logo.svg" alt="CRAVR" width="72" height="72">
 
-        <p class="subline">Ein Premium-Journal für Disziplin, kein Motivationsbuch. Dein Ritual, Tag für Tag. Start: Neujahr.</p>
-      </section>
+          <h1 class="headline">CRAVR kommt.</h1>
 
-      <div class="col-divider" aria-hidden="true"></div>
-
-      <section class="form-col">
-        <div class="form-inner">
-          <h2 class="form-headline">Trag dich ein.<br>Sei zuerst dabei.</h2>
-
-          <form id="waitlist-form" class="waitlist-form" data-endpoint="https://cravr-warteliste.cravr-official.workers.dev" novalidate>
-
-            <label class="visually-hidden" for="email">Deine E-Mail-Adresse</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              class="email-input"
-              placeholder="Deine E-Mail-Adresse"
-              autocomplete="email"
-              required
-            >
-
-            <fieldset class="price-signal">
-              <legend>Was wäre dir ein Journal wie dieses wert? <span class="optional">(optional)</span></legend>
-              <div class="price-options">
-                <label class="price-option">
-                  <input type="radio" name="PRICE_SIGNAL" value="unter_30">
-                  <span>unter 30&nbsp;&euro;</span>
-                </label>
-                <label class="price-option">
-                  <input type="radio" name="PRICE_SIGNAL" value="30_50">
-                  <span>30-50&nbsp;&euro;</span>
-                </label>
-                <label class="price-option">
-                  <input type="radio" name="PRICE_SIGNAL" value="50_70">
-                  <span>50-70&nbsp;&euro;</span>
-                </label>
-                <label class="price-option">
-                  <input type="radio" name="PRICE_SIGNAL" value="ueber_70">
-                  <span>über 70&nbsp;&euro;</span>
-                </label>
-              </div>
-            </fieldset>
-
-            <button type="submit" class="submit-button">Platz sichern</button>
-
-            <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
-          </form>
-
-          <p class="fine-print">Kein Spam. Kein Verkauf deiner Daten. Du erfährst nur, wenn CRAVR startet. Mehr dazu in der <a href="PLACEHOLDER_DATENSCHUTZ_URL">Datenschutzerklärung</a>.</p>
+          <p class="subline">Ein Premium-Journal für Disziplin, kein Motivationsbuch. Dein Ritual, Tag für Tag. Start: Neujahr.</p>
         </div>
-      </section>
 
-    </div>
+        <div class="col-divider" aria-hidden="true"></div>
+
+        <div class="form-col">
+          <div class="form-inner">
+            <h2 class="form-headline">Trag dich ein.<br>Sei zuerst dabei.</h2>
+
+            <form id="waitlist-form" class="waitlist-form" data-endpoint="https://cravr-warteliste.cravr-official.workers.dev" novalidate>
+
+              <label class="visually-hidden" for="email">Deine E-Mail-Adresse</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="email-input"
+                placeholder="Deine E-Mail-Adresse"
+                autocomplete="email"
+                required
+              >
+
+              <!-- Honeypot: fuer Menschen unsichtbar, Bots fuellen es aus -->
+              <div class="hp-field" aria-hidden="true">
+                <label for="website">Bitte dieses Feld leer lassen</label>
+                <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+              </div>
+
+              <fieldset class="price-signal">
+                <legend>Was wäre dir ein Journal wie dieses wert? <span class="optional">(optional)</span></legend>
+                <div class="price-options">
+                  <label class="price-option">
+                    <input type="radio" name="PRICE_SIGNAL" value="unter_30">
+                    <span>unter 30&nbsp;&euro;</span>
+                  </label>
+                  <label class="price-option">
+                    <input type="radio" name="PRICE_SIGNAL" value="30_50">
+                    <span>30-50&nbsp;&euro;</span>
+                  </label>
+                  <label class="price-option">
+                    <input type="radio" name="PRICE_SIGNAL" value="50_70">
+                    <span>50-70&nbsp;&euro;</span>
+                  </label>
+                  <label class="price-option">
+                    <input type="radio" name="PRICE_SIGNAL" value="ueber_70">
+                    <span>über 70&nbsp;&euro;</span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <button type="submit" class="submit-button">Platz sichern</button>
+
+              <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+            </form>
+
+            <p class="fine-print">Kein Spam. Kein Verkauf deiner Daten. Du erfährst nur, wenn CRAVR startet. Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Das Prinzip: erklaert das Warum, ohne die Struktur preiszugeben -->
+    <section class="section section-principle reveal">
+      <div class="section-inner">
+        <h2 class="section-headline">Ein Rahmen. Kein Ratgeber.</h2>
+        <p class="section-body">
+          Die meisten Vorsätze scheitern nicht am Willen, sondern daran, dass nichts sie trägt.
+          CRAVR gibt dir jeden Tag denselben Ablauf. Kurz genug, dass du ihn durchhältst.
+          Fest genug, dass er dich hält, wenn der Wille gerade fehlt.
+        </p>
+        <p class="section-accent">Fünf Minuten sind immer möglich.</p>
+      </div>
+    </section>
+
+    <!-- Markenkern: das staerkste Statement, bewusst als eigener Moment -->
+    <section class="section section-creed reveal">
+      <div class="section-inner">
+        <p class="creed">
+          <span class="creed-line creed-negative">CRAVR verkauft keine Motivation.</span>
+          <span class="creed-line creed-negative">CRAVR verkauft keine Manifestation.</span>
+          <span class="creed-line creed-positive">CRAVR verkauft einen Rahmen, in dem Disziplin wachsen kann.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- Ausblick: Sanduhr und Stift ausschliesslich als Schatten angedeutet -->
+    <section class="section section-more reveal">
+      <div class="section-inner section-more-grid">
+
+        <div class="more-copy">
+          <h2 class="section-headline">Das Journal ist der Anfang.</h2>
+          <p class="section-body">
+            Zum Ritual gehört mehr als ein Buch. Woran wir gerade arbeiten, zeigen wir,
+            wenn es fertig ist und nicht früher. Wer eingetragen ist, sieht es zuerst.
+          </p>
+        </div>
+
+        <!-- Schattenwurf statt Produktabbildung: deutet an, behauptet nichts -->
+        <div class="more-shadows" aria-hidden="true">
+          <svg class="shadow-shape shadow-hourglass" viewBox="0 0 100 160" role="presentation" focusable="false">
+            <path d="M18 6 h64 v10 h-6 c0 26 -18 40 -26 58 c8 18 26 32 26 58 h6 v10 h-64 v-10 h6 c0 -26 18 -40 26 -58 c-8 -18 -26 -32 -26 -58 h-6 z"/>
+          </svg>
+          <svg class="shadow-shape shadow-pen" viewBox="0 0 24 190" role="presentation" focusable="false">
+            <path d="M12 0 l7 22 v140 l-7 28 l-7 -28 v-140 z"/>
+          </svg>
+        </div>
+
+      </div>
+      <!-- TODO Bildplatz: echte Buchfotos (Haptik, aufgeschlagene Seiten, Streiflicht), 1600x1200 -->
+    </section>
+
+    <!-- Abschluss: gleiche CTA-Intention und gleiches Label wie im Hero -->
+    <section class="section section-close reveal">
+      <div class="section-inner">
+        <h2 class="section-headline close-headline">Start ist Neujahr.</h2>
+        <p class="section-body">Wer sich jetzt einträgt, erfährt als Erstes, wenn es so weit ist.</p>
+        <a class="submit-button close-button" href="#anmeldung">Platz sichern</a>
+      </div>
+    </section>
+
   </main>
+
+  <footer class="site-footer">
+    <div class="section-inner footer-inner">
+      <span class="footer-brand">CRAVR</span>
+      <nav class="footer-nav">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </nav>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>
