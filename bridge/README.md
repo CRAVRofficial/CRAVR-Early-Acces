@@ -7,14 +7,14 @@ Kleine Cloudflare-Worker-Funktion, die die Warteliste-Anmeldung (E-Mail plus opt
 Alles läuft, per Selbsttest bestätigt. Der Worker antwortet unter `https://cravr-warteliste.cravr-official.workers.dev` mit:
 
 ```json
-{"version":"2026-08-26-secure4","has_brevo_key":true,"doi_template":"9","has_rate_limit":true}
+{"version":"2026-08-26-secure6","has_brevo_key":true,"doi_template":"11","has_rate_limit":true}
 ```
 
 Erledigt:
 
 - Brevo-Schlüssel als Secret hinterlegt, Liste 5 und Attribut `PRICE_SIGNAL` vorhanden
 - KV-Speicher `cravr-rate-limit` angelegt und als `RATE_LIMIT` verknüpft
-- `BREVO_DOI_TEMPLATE_ID` = 9, `BREVO_DOI_REDIRECT_URL` auf die Dankeseite
+- `BREVO_DOI_TEMPLATE_ID` = 11, `BREVO_DOI_REDIRECT_URL` auf die Dankeseite
 - Domain `cravr.de` ist bei Brevo vollständig beglaubigt (DKIM 1 und 2, DMARC, Marken-Eintrag), im DNS geprüft
 - End-to-End getestet: Anmeldung ausgelöst, Bestätigungsmail kam an, fremde Herkunft wird mit 403 abgewiesen, Honeypot verwirft Bot-Versuche still
 
@@ -25,7 +25,9 @@ Erledigt:
 1. **Spam-Signale im HTML.** Die Vorlage baute das Sanduhr-Logo aus Elementen mit `width:0; height:0` und Rahmen-Tricks. Elemente ohne echte Groesse gelten als Tarnmuster, weil Spammer so Inhalte verstecken. Dazu kam sehr wenig echter Text bei viel Gestaltung und keine Absenderangabe im Fuss.
 2. **Gmail kehrt im Dunkelmodus Farben um.** Die Vorlage war durchgehend dunkel gebaut. Gmail invertierte sie, wodurch goldene Schrift auf weissem Grund stand und teils nur ein leerer weisser Block ankam. Auch ein dunkelgruener Kopfbereich wurde zu Mintgruen.
 
-**Was die aktuelle Vorlage anders macht:** keine Elemente ohne Groesse, ausformulierter Text, vollstaendige Absenderangabe und Antwortadresse, `color-scheme`-Angabe plus eigene Regeln fuer den Dunkelmodus, und keine grossen Farbflaechen. Die Marke traegt ueber Gold und die Georgia-Schrift, nicht ueber Flaechen.
+**Was die aktuelle Vorlage anders macht:** keine Elemente ohne Groesse, ausformulierter Text, vollstaendige Absenderangabe und Antwortadresse, `color-scheme`-Angabe plus eigene Regeln fuer den Dunkelmodus. Der Kopfbereich ist ein **Bild** (`assets/mail-header-v2.png`, CRAVR in echtem Cinzel, gold in goldener Umrandung auf schwarz). Das loest zwei Probleme auf einmal: Gmail unterstuetzt keine eigenen Schriftarten in E-Mails, und Bilder werden im Dunkelmodus nicht umgefaerbt. Der schwarze Hintergrund bleibt dadurch garantiert schwarz.
+
+**Wenn das Header-Bild geaendert wird:** immer unter neuem Dateinamen speichern. Mailprogramme und GitHub Pages halten Bilder im Zwischenspeicher, unter gleichem Namen sieht der Empfaenger sonst die alte Fassung. Danach eine neue Brevo-Vorlage anlegen, Vorlagen lassen sich ueber die Schnittstelle nicht aendern.
 
 **Weitere Stolpersteine:**
 
@@ -35,7 +37,7 @@ Erledigt:
 - **Brevo nutzt `brevo1._domainkey` und `brevo2._domainkey`**, nicht das uebliche `mail._domainkey`. Die Abfrage des falschen Namens fuehrte faelschlich zu dem Schluss, die Domain sei nicht beglaubigt. Sie ist es.
 - **Eine neue Domain hat bei Google keinen Ruf.** In den ersten Tagen entscheidet der Filter schwankend. Das legt sich, wenn Mails ankommen und als "Kein Spam" markiert werden.
 
-**Aufraeumen offen:** In Brevo liegen die Testvorlagen 6, 7 und 8 als Karteileichen. Aktiv ist 9. Loeschen muss Bennett selbst, die Schnittstelle darf Vorlagen nur anlegen und lesen.
+**Aufraeumen offen:** In Brevo liegen die Testvorlagen 6 bis 10 als Karteileichen. Aktiv ist 11. Loeschen muss Bennett selbst, die Schnittstelle darf Vorlagen nur anlegen und lesen.
 
 ## Was der Worker prüft, bevor er etwas einträgt
 
@@ -52,9 +54,9 @@ Diese Schritte sind bereits erledigt, hier nur dokumentiert, falls etwas neu auf
 
 **KV-Speicher fuer die Anfragebegrenzung.** KV ist ein einfacher Speicher bei Cloudflare, in dem sich der Worker merkt, wie oft eine IP-Adresse es schon versucht hat, wie ein Strichlisten-Zettel neben der Tuer. Angelegt als `cravr-rate-limit`, im Worker unter Settings, Bindings als KV Namespace mit dem Variablennamen `RATE_LIMIT` verknuepft.
 
-**Bestaetigungsmail.** Vorlage "CRAVR Early Access - Anmeldung bestaetigen v4", Nummer 9, Absender `info@cravr.de`. Im Worker als zwei normale Variablen hinterlegt (keine Secrets noetig, das sind keine Geheimnisse):
+**Bestaetigungsmail.** Vorlage "CRAVR Early Access - Anmeldung bestaetigen v6", Nummer 11, Absender `info@cravr.de`. Im Worker als zwei normale Variablen hinterlegt (keine Secrets noetig, das sind keine Geheimnisse):
 
-- `BREVO_DOI_TEMPLATE_ID`, Wert `9`
+- `BREVO_DOI_TEMPLATE_ID`, Wert `11`
 - `BREVO_DOI_REDIRECT_URL`, Wert `https://cravrofficial.github.io/CRAVR-Early-Acces/danke.html`, nach dem Domain-Umzug `https://early.cravr.de/danke.html`
 
 Fehlen diese beiden Werte, traegt der Worker Kontakte direkt ein, ohne Bestaetigungsschritt. Das ist der Rueckfallweg und fuer den Livegang nicht ausreichend.
@@ -71,9 +73,9 @@ Antwort bei vollständiger Einrichtung:
 
 ```json
 {
-  "version": "2026-08-26-secure4",
+  "version": "2026-08-26-secure6",
   "has_brevo_key": true,
-  "doi_template": "9",
+  "doi_template": "11",
   "has_rate_limit": true
 }
 ```
